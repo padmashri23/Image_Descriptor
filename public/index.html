@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Identifier</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Photo Identifier</h1>
+            <p>Upload a photo and let AI describe it.</p>
+        </header>
+
+        <main>
+            <section id="upload-area">
+                <input type="file" id="file-input" accept="image/*" hidden>
+                <label for="file-input" class="upload-button">Upload Image</label>
+                <div id="preview-container">
+                    <img id="image-preview" src="#" alt="Image Preview">
+                </div>
+                <button id="identifyButton" disabled>Identify Image</button>
+            </section>
+
+            <section id="results-area" style="display: none;">
+                <h2>Description</h2>
+                <p id="loading-message" style="display: none;">Analyzing...</p>
+                <p id="description"></p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const imagePreview = document.getElementById('image-preview');
+        const identifyButton = document.getElementById('identifyButton');
+        const description = document.getElementById('description');
+
+        let file;
+
+        fileInput.addEventListener('change', (e) => {
+            file = e.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = (event) => {
+                    imagePreview.src = event.target.result;
+                    imagePreview.style.display = 'block';
+                    identifyButton.disabled = false;
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = '#';
+                imagePreview.style.display = 'none';
+                identifyButton.disabled = true;
+            }
+        });
+
+        identifyButton.addEventListener('click', async () => {
+            description.textContent = 'Identifying...';
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                const response = await fetch('/identify', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                description.textContent = data.description;
+                document.getElementById('results-area').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                description.textContent = 'Error identifying image.';
+            }
+        });
+    </script>
+</body>
+</html>
