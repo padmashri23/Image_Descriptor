@@ -48,7 +48,7 @@ const {
       {text: "Object: "},
       {text: "Description: This is a pipe organ. It is a large musical instrument that is used in churches, concert halls, and other large buildings. It is made up of a series of pipes that are arranged in different sizes and shapes. The pipes are played by pressing keys on a keyboard. When a key is pressed, air is forced through the pipe, which produces a sound. The sound of a pipe organ is very powerful and can be used to create a wide variety of music."},
       {text: "Object: "},
-      {text: "Description: This is a sundial. It is a device that uses the sun's position in the sky to tell the time. The sundial has a flat surface with a hole in the center. A metal rod is placed through the hole and is pointed at the North Star. The shadow of the rod falls on the flat surface and indicates the time."},
+      {text: "Description: This is a sundial. It is a device that uses the sun's position in the sky to tell the time. The sundial has a flat surface with a hole in the center. A metal rod is placed through the hole and is pointed at the North Star. The shadow of the rod falls on the flat surface and indicates the time."},//This is my final project in github.
       {text: "Object: "},
       {
         fileData: {
